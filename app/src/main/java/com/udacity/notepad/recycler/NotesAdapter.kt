@@ -25,7 +25,7 @@ class NotesAdapter(private val context: Context) : RecyclerView.Adapter<NotesAda
         setHasStableIds(true)
     }
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         refresh()
     }
 
@@ -51,7 +51,7 @@ class NotesAdapter(private val context: Context) : RecyclerView.Adapter<NotesAda
         if (isRefreshing) return
         isRefreshing = true
         DataStore.execute {
-            val notes = DataStore.notes.all
+            val notes = DataStore.notes.getAll()
             Handler(Looper.getMainLooper()).post {
                 this@NotesAdapter.notes = notes
                 notifyDataSetChanged()
